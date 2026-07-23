@@ -4,7 +4,7 @@ services:
     ports: 
       - "3000:5173"
     environment:
-      VITE_BACKEND_URL: localhost
+      VITE_BACKEND_URL: 13.205.89.188
     depends_on:
       - backend
     networks:

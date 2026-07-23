@@ -1,0 +1,54 @@
+services:
+  frontend:
+    build: ./frontend
+    ports: 
+      - "3000:5173"
+    environment:
+      VITE_BACKEND_URL: localhost
+    depends_on:
+      - backend
+    networks:
+      - classroom-network
+
+  backend:
+    build: ./backend
+    ports:
+      - "4000:4000"
+    environment:
+      POSTGRES_HOST: database
+      POSTGRES_PORT: 5432
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DATABASE: ${POSTGRES_DATABASE}
+      PORT: 4000
+      MODE: DEV
+      JWT_SECRET: ${JWT_SECRET}
+      RUN_MIGRATIONS: true
+      REFRESH_TOKEN: ${REFRESH_TOKEN}
+      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}
+      GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET}
+      GOOGLE_CALLBACK_URL: http://localhost:4000/auth/google/callback
+    depends_on:
+      - database
+    networks:
+      - classroom-network
+
+  database:
+    image: postgres:18.4
+    ports:
+      - "4001:5432"
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DATABASE}
+    volumes:
+      - pg_classroomo_data:/var/lib/postgresql/18/data
+    networks:
+      - classroom-network
+
+volumes:
+  pg_classroomo_data:
+
+networks:
+  classroom-network:
+    driver: bridge

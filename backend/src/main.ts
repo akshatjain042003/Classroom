@@ -10,6 +10,7 @@ async function bootstrap() {
     origin: [
       'http://13.205.89.188:3000',
       'http://13.205.89.188',
+      'https://13.205.89.188.sslip.io',
       'http://localhost:3000',
     ],
     credentials: true,

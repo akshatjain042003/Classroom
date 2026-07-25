@@ -79,7 +79,7 @@ const Whiteboard: React.FC = () => {
     allStrokes.forEach((stroke) => {
       if (stroke.points.length < 2) return;
 
-      const localStroke = stroke as LocalStroke;
+      // const localStroke = stroke as LocalStroke;
       
       // All strokes use source-over, but eraser strokes use background color
       ctx.globalCompositeOperation = 'source-over';
@@ -112,18 +112,18 @@ const Whiteboard: React.FC = () => {
     };
   };
 
-  const isPointNearStroke = (point: Point, stroke: Stroke, threshold: number = 10): boolean => {
-    for (let i = 0; i < stroke.points.length - 1; i++) {
-      const p1 = stroke.points[i];
-      const p2 = stroke.points[i + 1];
+  // const isPointNearStroke = (point: Point, stroke: Stroke, threshold: number = 10): boolean => {
+  //   for (let i = 0; i < stroke.points.length - 1; i++) {
+  //     const p1 = stroke.points[i];
+  //     const p2 = stroke.points[i + 1];
       
-      const distance = distanceToLineSegment(point, p1, p2);
-      if (distance <= threshold) {
-        return true;
-      }
-    }
-    return false;
-  };
+  //     const distance = distanceToLineSegment(point, p1, p2);
+  //     if (distance <= threshold) {
+  //       return true;
+  //     }
+  //   }
+  //   return false;
+  // };
 
   const distanceToLineSegment = (point: Point, lineStart: Point, lineEnd: Point): number => {
     const A = point.x - lineStart.x;

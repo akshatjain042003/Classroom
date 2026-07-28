@@ -1,0 +1,25 @@
+name: Deploy to Amplify
+
+on: 
+  push:
+    branches:
+      - master
+
+jobs:
+  check-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check commit message
+        id: check
+        run: |
+          MSG=$(git log -1 --pretty=%B)
+          echo "Commit message: $MSG"
+          if [["$MSG" == *"deploy-frontend"*]]; then
+            echo "trigger=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "trigger=false" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Deploy to Amplify
+        if: steps.check.outputs.trigger == 'true'
+        run: |
+          curl -X POST -d {} "${{secrets.AMPLIFY_WEBHOOK_URL}}"

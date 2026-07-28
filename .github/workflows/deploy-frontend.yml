@@ -3,7 +3,7 @@ name: Trigger Amplify Deploy
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   check-and-deploy:

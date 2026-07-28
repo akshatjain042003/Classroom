@@ -10,7 +10,7 @@ async function bootstrap() {
     origin: [
       'http://13.204.29.116:3000',
       'http://13.204.29.116',
-      'https://13.204.29.116.sslip.io',
+      'https://master.d3tbbn4k3aj5gn.amplifyapp.com/',
       'http://localhost:3000',
     ],
     credentials: true,

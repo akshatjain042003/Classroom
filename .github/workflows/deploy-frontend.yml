@@ -1,25 +1,31 @@
-name: Deploy to Amplify
+name: Trigger Amplify Deploy
 
-on: 
+on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   check-and-deploy:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2   # need at least 2 commits so `git log -1` has history to read
+
       - name: Check commit message
         id: check
         run: |
           MSG=$(git log -1 --pretty=%B)
           echo "Commit message: $MSG"
-          if [["$MSG" == *"deploy-frontend"*]]; then
+          if [[ "$MSG" == *"deploy-frontend"* ]]; then
             echo "trigger=true" >> "$GITHUB_OUTPUT"
           else
             echo "trigger=false" >> "$GITHUB_OUTPUT"
           fi
-      - name: Deploy to Amplify
+
+      - name: Trigger Amplify Build
         if: steps.check.outputs.trigger == 'true'
         run: |
-          curl -X POST -d {} "${{secrets.AMPLIFY_WEBHOOK_URL}}"
+          curl -X POST -d {} "${{ secrets.AMPLIFY_WEBHOOK_URL }}"

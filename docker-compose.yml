@@ -7,4 +7,28 @@ services:
       - "4000:4000"
     env_file:
       - ./backend/.env
+    depends_on:
+      - database
+    networks:
+      - classroom-network
+
+  database:
+    image: postgres:18.4
+    ports:
+      - "4001:5432"
+    environment:
+      POSTGRES_USER: akshat
+      POSTGRES_PASSWORD: akshat123
+      POSTGRES_DB: classroom
+    volumes:
+      - pg_classroomo_data:/var/lib/postgresql/18/data
+    networks:
+      - classroom-network
+
+volumes:
+  pg_classroomo_data:
+
+networks:
+  classroom-network:
+    driver: bridge
       

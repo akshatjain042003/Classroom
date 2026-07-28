@@ -28,4 +28,4 @@ jobs:
       - name: Trigger Amplify Build
         if: steps.check.outputs.trigger == 'true'
         run: |
-          curl -X POST -d {} "${{ secrets.AMPLIFY_WEBHOOK_URL }}"
+          curl -f -X POST "${{ secrets.AMPLIFY_WEBHOOK_URL }}" -w "\nHTTP Status: %{http_code}\n"

@@ -25,7 +25,7 @@ jobs:
             echo "trigger=false" >> "$GITHUB_OUTPUT"
           fi
       - name: Deploy to EC2
-        if: steps.check.output.trigger == 'true'
+        if: steps.check.outputs.trigger == 'true'
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.EC2_HOST }}

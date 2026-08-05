@@ -19,7 +19,7 @@ jobs:
         run: |
           MSG=$(git log -1 --pretty=%B)
           echo "Commit message: $MSG"
-          if [["$MSG"==*"deploy-backend"*]]; then
+          if [[ "$MSG" == *"deploy-backend"* ]]; then
             echo "trigger=true" >> "$GITHUB_OUTPUT"
           else
             echo "trigger=false" >> "$GITHUB_OUTPUT"
